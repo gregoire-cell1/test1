@@ -31,7 +31,7 @@ navLinks.forEach(link => {
 
 /* ===================================================
    Données et affichage des formations
-   (Incluant des informations détaillées par étudiant)
+   (Incluant des modales détaillées pour chaque formation)
 =================================================== */
 const formations = [
   {
@@ -58,21 +58,21 @@ const formations = [
         nom: "Emma",
         age: 20,
         domaine: "Développement Web",
-        bio: "Passionnée de code et de technologie, Emma travaille sur des projets innovants et aime partager ses astuces.",
+        bio: "Passionnée de code et de technologie, Emma travaille sur des projets innovants et partage ses astuces.",
         email: "emma@example.com"
       },
       {
         nom: "Lucas",
         age: 21,
         domaine: "Data Science",
-        bio: "Lucas est un geek des données, capable de transformer des chiffres en histoires captivantes.",
+        bio: "Lucas transforme des données en histoires captivantes, toujours à l'affût des dernières technologies.",
         email: "lucas@example.com"
       },
       {
         nom: "Sarah",
         age: 19,
         domaine: "UI/UX",
-        bio: "Sarah allie créativité et technique pour concevoir des interfaces intuitives et design.",
+        bio: "Sarah allie créativité et technicité pour concevoir des interfaces intuitives et esthétiques.",
         email: "sarah@example.com"
       }
     ]
@@ -100,14 +100,14 @@ const formations = [
         nom: "Chloé",
         age: 20,
         domaine: "Psychologie Cognitive",
-        bio: "Chloé se passionne pour l'étude des comportements humains et l'impact des environnements sociaux.",
+        bio: "Chloé se passionne pour l'étude des comportements humains et l'impact social.",
         email: "chloe@example.com"
       },
       {
         nom: "Yanis",
         age: 22,
         domaine: "Psychologie Sociale",
-        bio: "Yanis aime analyser les interactions humaines et s’investit dans des projets de recherche innovants.",
+        bio: "Yanis analyse les interactions humaines et travaille sur des projets de recherche innovants.",
         email: "yanis@example.com"
       }
     ]
@@ -136,32 +136,32 @@ const formations = [
         nom: "Marc",
         age: 21,
         domaine: "Commerce",
-        bio: "Marc est motivé par les défis internationaux et excelle dans les négociations multiculturelles.",
+        bio: "Marc excelle dans les négociations multiculturelles et aime relever les défis internationaux.",
         email: "marc@example.com"
       },
       {
         nom: "Léa",
         age: 20,
         domaine: "Marketing International",
-        bio: "Léa combine sens aigu du commerce et créativité, se spécialisant dans les stratégies globales.",
+        bio: "Léa combine sens aigu du commerce et créativité pour élaborer des stratégies globales.",
         email: "lea@example.com"
       },
       {
         nom: "Théo",
         age: 22,
         domaine: "Gestion Export",
-        bio: "Théo aime optimiser les flux commerciaux et s’engage dans des projets de développement à l'international.",
+        bio: "Théo optimise les flux commerciaux et s’engage sur des projets de développement à l'international.",
         email: "theo@example.com"
       }
     ]
   }
-  // Vous pouvez ajouter autant de formations que nécessaire...
+  // Ajoute d'autres formations au besoin...
 ];
 
 const container = document.getElementById("cardsContainer");
 const searchInput = document.getElementById("searchInput");
 
-/* Créer la carte d'une formation avec bouton de contact */
+/* Créer une carte formation avec bouton "Contacter un étudiant" */
 function createCard(formation) {
   const card = document.createElement("div");
   card.classList.add("card");
@@ -183,7 +183,6 @@ function createCard(formation) {
   container.appendChild(card);
 }
 
-/* Afficher toutes les cartes */
 function renderCards() {
   container.innerHTML = "";
   formations.forEach(createCard);
@@ -199,13 +198,12 @@ searchInput.addEventListener("input", () => {
 
 /* ===================================================
    Gestion de la modale "Contacter un étudiant"
-   (Affichage détaillé de plusieurs infos)
+   (Affichage détaillé des infos par formation)
 =================================================== */
 const modal = document.getElementById("modal");
 const modalClose = document.getElementById("modalClose");
 const modalBody = document.getElementById("modalBody");
 
-// Ouvre la modale et affiche les infos détaillées de chaque étudiant
 function openModal(etudiants) {
   let html = "";
   etudiants.forEach(etud => {
@@ -219,12 +217,11 @@ function openModal(etudiants) {
     `;
   });
   modalBody.innerHTML = html;
-  modal.classList.remove("hidden");
+  modal.classList.add("active");
 }
 
-// Ferme la modale
 function closeModal() {
-  modal.classList.add("hidden");
+  modal.classList.remove("active");
 }
 
 modalClose.addEventListener("click", closeModal);
@@ -232,7 +229,6 @@ window.addEventListener("click", e => {
   if (e.target === modal) closeModal();
 });
 
-// Délégation d'événement pour les boutons "Contacter un étudiant"
 document.addEventListener("click", e => {
   if (e.target && e.target.classList.contains("contact-btn")) {
     const etudiants = JSON.parse(e.target.getAttribute("data-students"));
@@ -241,14 +237,15 @@ document.addEventListener("click", e => {
 });
 
 /* ===================================================
-   Gestion du formulaire de contact (affichage confirmation)
+   Gestion du formulaire de contact
+   (Affichage de confirmation après envoi)
 =================================================== */
 const contactForm = document.getElementById("contactForm");
 const contactConfirmation = document.getElementById("contactConfirmation");
 
 contactForm.addEventListener("submit", e => {
   e.preventDefault();
-  // Simuler l'envoi du formulaire (vous pouvez intégrer ici une requête AJAX)
+  // Simule l'envoi (vous pouvez ajouter ici une requête AJAX)
   setTimeout(() => {
     contactForm.reset();
     contactConfirmation.classList.remove("hidden");
