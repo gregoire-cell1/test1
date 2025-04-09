@@ -7,8 +7,14 @@ const sections = document.querySelectorAll('.page-section');
 function switchPage(pageId) {
   sections.forEach(section => {
     if (section.id === pageId) {
-      section.classList.add('active-section');
-      if (pageId === "formations") renderCards();
+      // Transition out
+      section.style.opacity = 0;
+      setTimeout(() => {
+        section.classList.add('active-section');
+        section.style.opacity = 1; // Transition in
+        section.style.transition = "opacity 0.5s ease";
+        if (pageId === "formations") renderCards();
+      }, 300);
     } else {
       section.classList.remove('active-section');
     }
@@ -165,6 +171,11 @@ const searchInput = document.getElementById("searchInput");
 function createCard(formation) {
   const card = document.createElement("div");
   card.classList.add("card");
+
+  // Ajout d'animation initiale
+  card.style.opacity = 0;
+  card.style.transform = "translateY(20px)";
+
   card.innerHTML = `
     <h2>${formation.nom}</h2>
     <p><strong>Établissement :</strong> ${formation.etablissement}</p>
@@ -181,6 +192,13 @@ function createCard(formation) {
     <button class="contact-btn" data-students='${JSON.stringify(formation.etudiants)}'>Contacter un étudiant</button>
   `;
   container.appendChild(card);
+
+  // Animation d'apparition
+  setTimeout(() => {
+    card.style.opacity = 1;
+    card.style.transform = "translateY(0)";
+    card.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+  }, 100);
 }
 
 function renderCards() {
